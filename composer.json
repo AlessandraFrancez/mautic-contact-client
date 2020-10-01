@@ -3,6 +3,7 @@
     "description": "Create custom integrations without writing code.",
     "keywords": ["mautic","marketing","marketing automation","plugin"],
     "type": "mautic-plugin",
+    "version":"1.0.0",
     "require": {
         "mautic/composer-plugin": "^1.0",
         "mustache/mustache": "^2.12",
