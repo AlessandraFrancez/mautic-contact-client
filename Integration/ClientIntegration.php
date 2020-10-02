@@ -642,49 +642,48 @@ class ClientIntegration extends AbstractIntegration
      */
     private function evaluateDnc()
     {
-        if ($this->test) {
-            return $this;
-        }
-        $channels = explode(',', $this->contactClient->getDncChecks());
-        if ($channels) {
-            foreach ($channels as $channel) {
-                $dncRepo = $this->getDncRepo();
-                $dncRepo->setDispatcher($this->dispatcher);
-                $dncEntries = $dncRepo->getEntriesByLeadAndChannel(
-                    $this->contact,
-                    $channel
-                );
+        // if ($this->test) {
+        //     return $this;
+        // }
+        // $channels = explode(',', $this->contactClient->getDncChecks());
+        // if ($channels) {
+        //     foreach ($channels as $channel) {
+        //         $dncRepo = $this->getDncRepo();
+        //         $dncRepo->setDispatcher($this->dispatcher);
+        //         $dncEntries = $dncRepo->getEntriesByLeadAndChannel(
+        //             $this->contact,
+        //             $channel
+        //         );
 
-                // @todo - Support external DNC checking should it be needed in the future.
-                // if (empty($dncEntries)) {
-                //     $event = new ContactDncCheckEvent($this->contact, $channels, $dncEntries);
-                //     $this->dispatcher->dispatch(ContactClientEvents::EXTERNAL_DNC_CHECK, $event);
-                // }
+        //         // @todo - Support external DNC checking should it be needed in the future.
+        //         // if (empty($dncEntries)) {
+        //         //     $event = new ContactDncCheckEvent($this->contact, $channels, $dncEntries);
+        //         //     $this->dispatcher->dispatch(ContactClientEvents::EXTERNAL_DNC_CHECK, $event);
+        //         // }
 
-                if (!empty($dncEntries)) {
-                    foreach ($dncEntries as $dnc) {
-                        $comments = !in_array($dnc->getComments(), ['user', 'system']) ? $dnc->getComments() : '';
-                        throw new ContactClientException(
-                            trim(
-                                $this->translator->trans(
-                                    'mautic.contactclient.sendcontact.error.dnc',
-                                    [
-                                        '%channel%'  => $this->getDncChannelName($channel),
-                                        '%date%'     => $dnc->getDateAdded()->format('Y-m-d H:i:s e'),
-                                        '%comments%' => $comments,
-                                    ]
-                                )
-                            ),
-                            0,
-                            null,
-                            Stat::TYPE_DNC,
-                            false
-                        );
-                    }
-                }
-            }
-        }
-
+        //         if (!empty($dncEntries)) {
+        //             foreach ($dncEntries as $dnc) {
+        //                 $comments = !in_array($dnc->getComments(), ['user', 'system']) ? $dnc->getComments() : '';
+        //                 throw new ContactClientException(
+        //                     trim(
+        //                         $this->translator->trans(
+        //                             'mautic.contactclient.sendcontact.error.dnc',
+        //                             [
+        //                                 '%channel%'  => $this->getDncChannelName($channel),
+        //                                 '%date%'     => $dnc->getDateAdded()->format('Y-m-d H:i:s e'),
+        //                                 '%comments%' => $comments,
+        //                             ]
+        //                         )
+        //                     ),
+        //                     0,
+        //                     null,
+        //                     Stat::TYPE_DNC,
+        //                     false
+        //                 );
+        //             }
+        //         }
+        //     }
+        // }
         return $this;
     }
 
